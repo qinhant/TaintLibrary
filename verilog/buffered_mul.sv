@@ -61,8 +61,8 @@ always @(posedge clk) begin
         cnt <= 1;
         out_data <= in_data;
     end 
-    // If the input data is 0, then the buffer takes 1 cycle, otherwise it takes multiple cycles
-    else if ((cnt == `BUF_LATENCY || (in_data == 0)) && busy) begin
+    // If the input data is not 0, then the buffer takes 1 cycle, otherwise it takes multiple cycles
+    else if ((cnt == `BUF_LATENCY || (in_data != 0)) && busy) begin
         busy <= 0;
     end
     else if (busy) begin
