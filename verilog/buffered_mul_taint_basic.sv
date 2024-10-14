@@ -35,6 +35,7 @@ always @(posedge clk) begin
     if (in_valid && !busy) begin
         cnt <= 1;
         out_result <= in_a * in_b;
+        busy <= 1;
     end 
 
     // If the operand is 0, then the multiplication takes 1 cycle, otherwise it takes multiple cycles
@@ -88,6 +89,7 @@ always @(posedge clk) begin
     if (in_valid && !busy) begin
         cnt <= 1;
         out_data <= in_data;
+        busy <= 1;
     end 
     // If the input data is not 0, then the buffer takes 1 cycle, otherwise it takes multiple cycles
     else if ((cnt == `BUF_LATENCY || (in_data != 0)) && busy) begin
