@@ -1,5 +1,5 @@
 `define WIDTH 4
-`define MUL_LATENCY 2
+`define MUL_LATENCY 3
 `define BUF_LATENCY 2
 
 module MUL(
@@ -24,6 +24,7 @@ always @(posedge clk) begin
     if (in_valid && !busy) begin
         cnt <= 1;
         out_result <= in_a * in_b;
+        busy <= 1;
     end 
     // If the operand is 0, then the multiplication takes 1 cycle, otherwise it takes multiple cycles
     else if ((cnt == `MUL_LATENCY || in_a == 0 || in_b == 0) && busy) begin
@@ -61,6 +62,7 @@ always @(posedge clk) begin
     if (in_valid && !busy) begin
         cnt <= 1;
         out_data <= in_data;
+        busy <= 1;
     end 
     // If the input data is not 0, then the buffer takes 1 cycle, otherwise it takes multiple cycles
     else if ((cnt == `BUF_LATENCY || (in_data != 0)) && busy) begin
